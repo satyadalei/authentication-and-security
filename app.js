@@ -1,8 +1,11 @@
+require('dotenv').config() ;
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const encrypt = require("mongoose-encryption");
+
+// console.log(process.env.SECRETKEY);
 
 const app = express();
 
@@ -17,9 +20,8 @@ const userSchema = new mongoose.Schema({
     password : String
 });
 // DO NOT CHANGE THIS KEY ---- DO NOT CHANGE THIS KEY ---- DO NOT CHANGE THIS KEY
-const secretKey = "hellothisisoursecret_";
 // DO NOT CHANGE THIS KEY ---- DO NOT CHANGE THIS KEY ---- DO NOT CHANGE THIS KEY 
-userSchema.plugin(encrypt, {secret:secretKey, encryptedFields:["password"]});
+userSchema.plugin(encrypt, {secret:process.env.SECRETKEY, encryptedFields:["password"]});
 const User = new mongoose.model("User", userSchema);
 
 
