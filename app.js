@@ -21,20 +21,19 @@ const userSchema = new mongoose.Schema({
 });
 // DO NOT CHANGE THIS KEY ---- DO NOT CHANGE THIS KEY ---- DO NOT CHANGE THIS KEY
 // DO NOT CHANGE THIS KEY ---- DO NOT CHANGE THIS KEY ---- DO NOT CHANGE THIS KEY 
-userSchema.plugin(encrypt, {secret:process.env.SECRETKEY, encryptedFields:["password"]});
+userSchema.plugin(encrypt , {secret:process.env.SECRETKEY, encryptedFields:["password"]});
 const User = new mongoose.model("User", userSchema);
 
 
 app.get("/", function(req,res){
     res.render("home");
-})
+});
 app.get("/login", function(req,res){
     res.render("login");
-})
+});
 app.get("/register", function(req,res){
     res.render("register");
 });
-
 app.post("/register", function(req,res){
    const newUser = new User({
     email : req.body.username,
@@ -42,13 +41,12 @@ app.post("/register", function(req,res){
    });
    newUser.save();
    res.render("secrets");
-})
+});
 
 
 app.post("/login", function(req,res){
-    const userEmail = req.body.username ;
-    const userPassword = req.body.password ;
-
+    const userEmail = req.body.username;
+    const userPassword = req.body.password;
     User.findOne({email : userEmail}, function(err,foundUser){
         if(err){
             console.log(err);
@@ -65,9 +63,6 @@ app.post("/login", function(req,res){
         }
     });
 });
-
-
-
 
 app.listen(3000, function(){
     console.log("Server started at 3000 port successfully");
