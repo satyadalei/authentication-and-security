@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
 app.use(session({
-    secret: "This is our little secret",
+    secret: process.env.ANOTHER_SECRET,
     resave: false,
     saveUninitialized: false
 }));
